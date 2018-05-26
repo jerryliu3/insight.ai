@@ -17,31 +17,32 @@ if not creds or creds.invalid:
     creds = tools.run_flow(flow, store)
 service = discovery.build('calendar', 'v3', http=creds.authorize(Http()))
 
-# Call the Calendar API
-now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-print('Getting the upcoming 10 events')
-events_result = service.events().list(calendarId='primary', timeMin=now,
-                                      maxResults=10, singleEvents=True,
-                                      orderBy='startTime').execute()
-events = events_result.get('items', [])
+def read():
+	# Call the Calendar API
+	now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+	print('Getting the upcoming 10 events')
+	events_result = service.events().list(calendarId='primary', timeMin=now,
+	                                      maxResults=10, singleEvents=True,
+	                                      orderBy='startTime').execute()
+	events = events_result.get('items', [])
 
-if not events:
-    print('No upcoming events found.')
-for event in events:
-    start = event['start'].get('dateTime', event['start'].get('date'))
-    print(start, event['summary'])
+	if not events:
+	    print('No upcoming events found.')
+	for event in events:
+	    start = event['start'].get('dateTime', event['start'].get('date'))
+	    print(start, event['summary'])
+	return events
 
-def insert(event, hours, type):
+def insert(name, length, t):
+	events = read()
 
-	# Refer to the Python quickstart on how to setup the environment:
-	# https://developers.google.com/calendar/quickstart/python
-	# Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
-	# stored credentials.
+	for event in events:
+	    start = event['start'].get('dateTime', event['start'].get('date'))
+	    print(start, event['summary'])
 
 	event = {
-	  'summary': 'Google I/O 2015',
-	  'location': '800 Howard St., San Francisco, CA 94103',
-	  'description': 'A chance to hear more about Google\'s developer products.',
+	  'summary': name,
+	  'description': t,
 	  'start': {
 	    'dateTime': '2018-05-28T09:00:00-07:00',
 	    'timeZone': 'America/Los_Angeles',
@@ -50,13 +51,6 @@ def insert(event, hours, type):
 	    'dateTime': '2018-05-28T17:00:00-07:00',
 	    'timeZone': 'America/Los_Angeles',
 	  },
-	  'recurrence': [
-	    'RRULE:FREQ=DAILY;COUNT=2'
-	  ],
-	  'attendees': [
-	    {'email': 'lpage@example.com'},
-	    {'email': 'sbrin@example.com'},
-	  ],
 	  'reminders': {
 	    'useDefault': False,
 	    'overrides': [
