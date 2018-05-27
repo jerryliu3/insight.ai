@@ -1,0 +1,5 @@
+I use anaconda. 
+First install flask. pip install flask. 
+
+Instructions followed: https://www.wintellect.com/creating-machine-learning-web-api:wq
+-flask/
