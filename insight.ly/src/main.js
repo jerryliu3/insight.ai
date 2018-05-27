@@ -7,6 +7,8 @@ import AWS from 'aws-sdk';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { VictoryPie, VictoryContainer } from 'victory';
+import {Bar, Line} from 'react-chartjs-2';
+import Chart from './Chart';
 
 // AWS.config.update({
 //   credentials: new AWS.CognitoIdentityCredentials({
@@ -127,6 +129,7 @@ class Main extends Component {
   }
 
   render() {
+
     const { classes } = this.props;
     let { text, prediction, predictions } = this.state;
 
@@ -164,6 +167,8 @@ class Main extends Component {
           href="https://github.com/jerryliu3/insight.ai" 
           target="_blank">Insight.ai</a></h1>
         </header>
+        <Chart />
+        <div> </div>
         <span>
         <TextField
           id="Input Field"
