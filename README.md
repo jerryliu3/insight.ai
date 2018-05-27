@@ -1,6 +1,6 @@
 http://help.sentiment140.com/for-students/
 
-DEMO: https://d1p2c2gujnpfsh.cloudfront.net
+DEMO: http://insightly-hosting-mobilehub-330001789.s3-website.ap-southeast-1.amazonaws.com/
 
 ## Introduction
 
