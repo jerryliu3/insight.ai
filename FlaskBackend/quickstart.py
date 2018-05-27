@@ -155,34 +155,33 @@ def insert(name, duration, t):
 	json_dump=json.dumps({"0": suggestions[0], "1": suggestions[1], "2": suggestions[2]}, sort_keys=True)
 	#print(json_dump)
 	print(json_dump)
+	schedule(name, duration, t, suggestions[0])
 	return json_dump
 
 def schedule(name, duration, t, suggestion):
 	#edit the parsing method below based on what the result of suggestion is expected to be
-	suggestion = datetime.datetime.strptime(suggestion, '%Y-%m-%dT%H:%M:%S-04:00')
+	suggestion = datetime.datetime.strptime(suggestion, '%Y-%m-%d %H:%M')
 	#ask front end to pick which time they want
-	answer = input('Would you like to have an event put on your calendar called ' + name + ' on ' + suggestion.strftime("%Y-%m-%d at %H:%M") + ' oclock for ' + str(duration) + ' minutes? ')
-	if(answer != 'no'):
-		suggestion_end = suggestion + relativedelta(minutes=duration)
-		event = {
-		  'summary': name,
-		  'description': t,
-		  'start': {
-		    'dateTime': suggestion.isoformat()+ '-04:00',
-		    'timeZone': 'America/New_York',
-		  },
-		  'end': {
-		    'dateTime': suggestion_end.isoformat()+'-04:00',
-		    'timeZone': 'America/New_York',
-		  },
-		  'reminders': {
-		    'useDefault': False,
-		    'overrides': [
-		      {'method': 'email', 'minutes': 24 * 60},
-		      {'method': 'popup', 'minutes': 10},
-		    ],
-		  },
-		}
+	suggestion_end = suggestion + relativedelta(minutes=duration)
+	event = {
+	  'summary': name,
+	  'description': t,
+	  'start': {
+	    'dateTime': suggestion.isoformat()+ '-04:00',
+	    'timeZone': 'America/New_York',
+	  },
+	  'end': {
+	    'dateTime': suggestion_end.isoformat()+'-04:00',
+	    'timeZone': 'America/New_York',
+	  },
+	  'reminders': {
+	    'useDefault': False,
+	    'overrides': [
+	      {'method': 'email', 'minutes': 24 * 60},
+	      {'method': 'popup', 'minutes': 10},
+	    ],
+	  },
+	}
 
-		event = service.events().insert(calendarId='primary', body=event).execute()
-		print ('Event created: %s' % (event.get('htmlLink')))
+	event = service.events().insert(calendarId='primary', body=event).execute()
+	print ('Event created: %s' % (event.get('htmlLink')))
