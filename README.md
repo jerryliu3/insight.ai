@@ -4,7 +4,7 @@ DEMO: http://insightly-hosting-mobilehub-330001789.s3-website.ap-southeast-1.ama
 
 ## Introduction
 
-This is Insight.ai, a machine learning processor of text.
+This is Insight.ai, a natural language processor of text that provides you with qualitative and quantitative information on your writing. It also includes automatic suggestion generation based on the input text, such as smart scheduling of events and tasks, as well as reminders to balance your state of mind.
 
 ## Requirements
 
@@ -14,7 +14,10 @@ This module requires the following modules/libraries:
 * Python
 * Flask
 * AWS
-* and more...
+* TensorFlow
+* NLTK
+* Google Calendar API
+and more...
 
 ## Installation
 
@@ -31,7 +34,7 @@ npm install``
 
 * Andrew Luo
 * [Arri Ye](https://github.com/music-mind/)
-* Jerry Liu
+* [Jerry Liu](https://github.com/jerryliu3)
 
 
 
