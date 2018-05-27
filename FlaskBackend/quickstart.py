@@ -145,16 +145,28 @@ def analyze(order, duration):
 			current_time = current_time + relativedelta(minutes=15)
 	return options
 
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
 
 def insert(name, duration, t):
 	day_order = order(t)
 	suggestions = analyze(day_order, duration)
-	
-	for s in range(0, len(suggestions)):
-		print(suggestions[s])
+	#for s in range(0, len(suggestions)):
 
+	#	print(suggestions[s])
+	#json_dump = json.dumps(suggestions, default=json_serial)
+	json_dump=json.dumps(suggestions, indent=4, sort_keys=True, default=str)
+	print(json_dump)
+	return json_dump
+
+def schedule(name, duration, t, suggestion):
+	#edit the parsing method below based on what the result of suggestion is expected to be
+	suggestion = datetime.datetime.strptime(suggestion, '%Y-%m-%dT%H:%M:%S-04:00')
 	#ask front end to pick which time they want
-	return
 	answer = input('Would you like to have an event put on your calendar called ' + name + ' on ' + suggestion.strftime("%Y-%m-%d at %H:%M") + ' oclock for ' + str(duration) + ' minutes? ')
 	if(answer != 'no'):
 		suggestion_end = suggestion + relativedelta(minutes=duration)
