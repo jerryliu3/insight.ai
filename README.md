@@ -18,8 +18,8 @@ This module requires the following modules/libraries:
 
 ## Installation
 
-'''git clone
-npm install'''
+``git clone
+npm install``
 
 ## Purpose
 
@@ -29,9 +29,9 @@ npm install'''
 
 ## Maintainers
 
-Andrew Luo
+* Andrew Luo
 * [Arri Ye](https://github.com/music-mind/)
-Jerry Liu
+* Jerry Liu
 
 
 
