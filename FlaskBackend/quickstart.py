@@ -154,8 +154,6 @@ def insert(name, duration, t):
 	#json_dump=json.dumps(suggestions, indent=4, sort_keys=True, default=str)
 	json_dump=json.dumps({"0": suggestions[0], "1": suggestions[1], "2": suggestions[2]}, sort_keys=True)
 	#print(json_dump)
-	print(json_dump)
-	schedule(name, duration, t, suggestions[0])
 	return json_dump
 
 def schedule(name, duration, t, suggestion):
