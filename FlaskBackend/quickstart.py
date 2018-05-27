@@ -9,6 +9,7 @@ from oauth2client import file, client, tools
 import datetime
 from dateutil.relativedelta import relativedelta
 import numpy as np
+import json
 # Setup the Calendar API
 SCOPES = 'https://www.googleapis.com/auth/calendar'
 store = file.Storage('credentials.json')
@@ -36,7 +37,7 @@ def read():
 
 
 def order(t):
-	work = dict({"assignment":"1", "project":"1", "work":"1", "homework":"1", "lab":"1", "report":"1", "paper":"1", "math":"1", "engineering":"1", "biology":"1", "physics":"1", "boring":"1", "job":"1", "computer":"1", "science":"1", "journal":"1", "lecture":"1", "tutorial":"1", "exam":"1", "assessment":"1"}) 
+	work = dict({"assignment":"1", "project":"1", "work":"1", "homework":"1", "lab":"1", "report":"1", "paper":"1", "math":"1", "engineering":"1", "biology":"1", "physics":"1", "boring":"1", "job":"1", "computer":"1", "science":"1", "journal":"1", "lecture":"1", "tutorial":"1", "exam":"1", "assessment":"1", "test":"1"}) 
 	costs = np.zeros(7)
 	#either work or other
 	now = datetime.datetime.utcnow()
@@ -78,6 +79,8 @@ def order(t):
 
 
 def analyze(order, duration):
+	options = []
+	number_options = 0
 	for day in order:
 		current_day = datetime.datetime.utcnow() + relativedelta(days=day)
 		current_day = current_day.replace(hour=9, minute=0, second=0,microsecond=0)
@@ -104,11 +107,16 @@ def analyze(order, duration):
 			#end1 = start1 + relativedelta(minutes=duration+15)
 			#end2 = start - relativedelta(minutes=15)
 			#start2 = end2 - relativedelta(minutes=duration+15)
-			start = current_time
-			end = current_time + relativedelta(minutes=duration)
+
+
+			start = current_time - relativedelta(minutes=15)
+			end = current_time + relativedelta(minutes=duration+15)
+			#start = current_time
+			#end = current_time + relativedelta(minutes=duration)
+
 			body = {
-				"timeMin": start.isoformat()+'Z',
-				"timeMax": end.isoformat()+'Z',
+				"timeMin": start.isoformat()+'-04:00',
+				"timeMax": end.isoformat()+'-04:00',
 				"timeZone": 'America/New_York',
 				"items": [{"id": '3jerryliu@gmail.com'}]
 			}
@@ -116,31 +124,49 @@ def analyze(order, duration):
 			#print('The event result is: ')
 			#print(start)
 			#print(end)
-			#print(eventsResult.get('busy'))
-			if(not eventsResult.get('busy')):
-				return current_time
-			cal_dict = eventsResult[u'calendars']
-			for cal_name in cal_dict:
-			    print(cal_name, cal_dict[cal_name])
-			current_time = current_time + relativedelta(minutes=30)
-	return null
+			#print(eventsResult)
+			#print(eventsResult[u'calendars'])
+			calendar_state = eventsResult[u'calendars']
+			#print(test)
+			email_state = calendar_state[u'3jerryliu@gmail.com']
+			#print(test)
+			busy_state = email_state[u'busy']
+			#print(test)
+			#print('end')
+			if(not busy_state):
+				number_options+=1
+				options.append(current_time)
+				current_time = current_time.replace(hour=23)
+				if(number_options==3):
+					return options
+			#cal_dict = eventsResult[u'calendars']
+			#for cal_name in cal_dict:
+			#    print(cal_name, cal_dict[cal_name])
+			current_time = current_time + relativedelta(minutes=15)
+	return options
 
 
 def insert(name, duration, t):
 	day_order = order(t)
-	suggestion = analyze(day_order, duration)
-	answer = input('Would you like to have an event put on your calendar called ' + name + ' on ' + suggestion.strftime("%Y-%m-%d at %H:%M") + ' oclock for ' + str(duration) + ' minutes with "' + t + '" as your description? ')
+	suggestions = analyze(day_order, duration)
+	
+	for s in range(0, len(suggestions)):
+		print(suggestions[s])
+
+	#ask front end to pick which time they want
+	return
+	answer = input('Would you like to have an event put on your calendar called ' + name + ' on ' + suggestion.strftime("%Y-%m-%d at %H:%M") + ' oclock for ' + str(duration) + ' minutes? ')
 	if(answer != 'no'):
 		suggestion_end = suggestion + relativedelta(minutes=duration)
 		event = {
 		  'summary': name,
 		  'description': t,
 		  'start': {
-		    'dateTime': suggestion.isoformat()+ '-05:00',
+		    'dateTime': suggestion.isoformat()+ '-04:00',
 		    'timeZone': 'America/New_York',
 		  },
 		  'end': {
-		    'dateTime': suggestion_end.isoformat()+'-05:00',
+		    'dateTime': suggestion_end.isoformat()+'-04:00',
 		    'timeZone': 'America/New_York',
 		  },
 		  'reminders': {
