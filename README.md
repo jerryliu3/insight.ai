@@ -1,5 +1,3 @@
-http://help.sentiment140.com/for-students/
-
 DEMO: http://insightly-hosting-mobilehub-330001789.s3-website.ap-southeast-1.amazonaws.com/
 
 ## Introduction
@@ -17,6 +15,7 @@ This module requires the following modules/libraries:
 * TensorFlow
 * NLTK
 * Google Calendar API
+* Data for model training: http://help.sentiment140.com/for-students/
 and more...
 
 ## Installation
