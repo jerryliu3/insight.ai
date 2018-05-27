@@ -79,7 +79,7 @@ def order(t):
 
 
 def analyze(order, duration):
-	options = []
+	options = ['', '', '']
 	number_options = 0
 	for day in order:
 		current_day = datetime.datetime.utcnow() + relativedelta(days=day)
@@ -134,8 +134,8 @@ def analyze(order, duration):
 			#print(test)
 			#print('end')
 			if(not busy_state):
+				options[number_options] = current_time.strftime("%Y-%m-%d %H:%M")
 				number_options+=1
-				options.append(current_time)
 				current_time = current_time.replace(hour=23)
 				if(number_options==3):
 					return options
@@ -145,21 +145,15 @@ def analyze(order, duration):
 			current_time = current_time + relativedelta(minutes=15)
 	return options
 
-def json_serial(obj):
-    """JSON serializer for objects not serializable by default json code"""
-
-    if isinstance(obj, (datetime, date)):
-        return obj.isoformat()
-    raise TypeError ("Type %s not serializable" % type(obj))
-
 def insert(name, duration, t):
 	day_order = order(t)
 	suggestions = analyze(day_order, duration)
 	#for s in range(0, len(suggestions)):
-
 	#	print(suggestions[s])
 	#json_dump = json.dumps(suggestions, default=json_serial)
-	json_dump=json.dumps(suggestions, indent=4, sort_keys=True, default=str)
+	#json_dump=json.dumps(suggestions, indent=4, sort_keys=True, default=str)
+	json_dump=json.dumps({"0": suggestions[0], "1": suggestions[1], "2": suggestions[2]}, sort_keys=True)
+	#print(json_dump)
 	print(json_dump)
 	return json_dump
 
