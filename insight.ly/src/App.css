@@ -5,16 +5,34 @@
 .App-header {
   background-color: #66d9ff;
   height: 50px;
-  padding: 20px;
+  padding: 5px;
   color: white;
 }
 
 .App-title {
   font-size: 1.5em;
+
 }
 
 .App-intro {
   font-size: large;
+}
+
+.chart {
+  display: inline-block;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: hotpink;
 }
 
 @keyframes App-logo-spin {
