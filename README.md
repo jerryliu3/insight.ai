@@ -52,7 +52,7 @@ Other applications for this technology, as mentioned, include analyzing emails t
 
 ## Maintainers
 
-* Andrew Luo
+* [Andrew Luo](https://github.com/Andrew-Luo1)
 * [Arri Ye](https://github.com/music-mind/)
 * [Jerry Liu](https://github.com/jerryliu3)
 
