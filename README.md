@@ -28,7 +28,10 @@ npm install``
 ## Problems We Encountered
 
 ## Future Todos
-
+* Keyword extraction of text using NLP:
+* https://www.airpair.com/nlp/keyword-extraction-tutorial
+* https://www.quora.com/What-are-the-best-keyword-extraction-algorithms-for-natural-language-processing-and-how-can-they-be-implemented-in-Python
+* https://github.com/csurfer/rake-nltk
 ## Maintainers
 
 * Andrew Luo
