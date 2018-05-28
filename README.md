@@ -1,4 +1,6 @@
-DEMO: http://insightly-hosting-mobilehub-330001789.s3-website.ap-southeast-1.amazonaws.com/
+DEMO VIDEO: https://drive.google.com/open?id=1fFgjQvK4Jnhmhms9Z_6A1Qhh-IGmpY2a
+
+DEPLOYED WEBAPP: http://insightly-hosting-mobilehub-330001789.s3-website.ap-southeast-1.amazonaws.com/
 
 ## Introduction
 
